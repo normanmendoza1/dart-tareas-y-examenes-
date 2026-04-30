@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Contador App',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      home: const ContadorPage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+// Pantalla principal del contador (StatefulWidget)
+class ContadorPage extends StatefulWidget {
+  const ContadorPage({super.key});
+
+  @override
+  State<ContadorPage> createState() => _ContadorPageState();
+}
+
+class _ContadorPageState extends State<ContadorPage> {
+  // Variable que almacena el valor actual del contador
+  int _contador = 0;
+
+  // Método para incrementar el contador
+  void _incrementar() {
+    setState(() {
+      _contador++; // Aumenta en 1
+    });
+  }
+
+  // Método para decrementar el contador con validación (no baja de 0)
+  void _decrementar() {
+    setState(() {
+      if (_contador > 0) {
+        _contador--; // Solo decrementa si es mayor a 0
+      }
+      // Si ya es 0, no hace nada
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Contador con setState'),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
+      body: Center(
+        // Centra todo el contenido en la pantalla
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Texto del contador, grande y centrado
+            Text(
+              '$_contador',
+              style: const TextStyle(
+                fontSize: 80,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 40), // Espaciado
+            // Fila con los dos botones (+ y -)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Botón para decrementar
+                ElevatedButton(
+                  onPressed: _decrementar,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    textStyle: const TextStyle(fontSize: 24),
+                  ),
+                  child: const Text('-'),
+                ),
+                const SizedBox(width: 30), // Espacio entre botones
+                // Botón para incrementar
+                ElevatedButton(
+                  onPressed: _incrementar,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    textStyle: const TextStyle(fontSize: 24),
+                  ),
+                  child: const Text('+'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
