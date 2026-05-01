@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ContadorPage(),
+    );
+  }
+}
+
+class ContadorPage extends StatefulWidget {
+  const ContadorPage({super.key});
+
+  @override
+  State<ContadorPage> createState() => _ContadorPageState();
+}
+
+class _ContadorPageState extends State<ContadorPage> {
+  int contador = 0;
+
+  void cambiar(int valor) {
+    setState(() {
+      contador = (contador + valor < 0) ? 0 : contador + valor;
+    });
+  }
+
+  Widget boton(String texto, int valor) {
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: () => cambiar(valor),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+        ),
+        child: Text(texto, style: const TextStyle(fontSize: 22)),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Contador con setState')),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('$contador', style: const TextStyle(fontSize: 80)),
+          const SizedBox(height: 40),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                boton('−', -1),
+                const SizedBox(width: 10),
+                boton('+1', 1),
+                const SizedBox(width: 10),
+                boton('+5', 5),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
